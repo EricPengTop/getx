@@ -24,6 +24,8 @@ class MultipartFile {
 
   Stream<List<int>>? get stream => _stream;
 
+  List<int>? get bytes => _bytes;
+
   int? get length => _length;
 
   final String filename;

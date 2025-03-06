@@ -10,6 +10,7 @@ import '../src/status/http_status.dart';
 import 'http/interface/request_base.dart';
 import 'http/request/http_request.dart';
 import 'interceptors/get_modifiers.dart';
+import 'multipart/multipart_file.dart';
 import 'response/client_response.dart';
 
 typedef Decoder<T> = T Function(dynamic data);
@@ -122,6 +123,10 @@ class GetHttpClient {
       headers['content-length'] = bodyBytes.length.toString();
       headers['content-type'] =
           'multipart/form-data; boundary=${body.boundary}';
+    } else if (body is MultipartFile) {
+      bodyBytes = body.bytes;
+      headers['content-length'] = body.length.toString();
+      headers['content-type'] = body.contentType;
     } else if (contentType != null &&
         contentType.toLowerCase() == 'application/x-www-form-urlencoded' &&
         body is Map) {
